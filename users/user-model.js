@@ -1,6 +1,6 @@
 const db = require("../data/config");
 
-async function add(user) {
+function add(user) {
   return db("users").insert(user);
 }
 

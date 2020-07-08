@@ -35,10 +35,14 @@ router.post("/login", async (req, res, next) => {
       });
     }
 
+    req.session.user = user;
+
     res.json({
       message: `Welcome ${user.username}`,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
