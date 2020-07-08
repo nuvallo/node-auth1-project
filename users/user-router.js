@@ -19,14 +19,4 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
-  try {
-    const addUser = await Users.add(req.body);
-
-    res.status(201).json(addUser);
-  } catch (error) {
-    next(error);
-  }
-});
-
 module.exports = router;
