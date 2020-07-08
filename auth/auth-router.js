@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const Users = require("../users/user-model");
 const userExists = require("../middleware/userExists");
 
+// Register a new user
 router.post("/register", userExists(), async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -18,6 +19,26 @@ router.post("/register", userExists(), async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// Login a existing user
+router.post("/login", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const user = await Users.findBy({ username }).first();
+
+    const passwordValid = await bcrypt.compare(password, user.password);
+
+    if (!passwordValid) {
+      return res.status(501).json({
+        message: "Invalid Credentials",
+      });
+    }
+
+    res.json({
+      message: `Welcome ${user.username}`,
+    });
+  } catch (error) {}
 });
 
 module.exports = router;
