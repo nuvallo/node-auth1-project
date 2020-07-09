@@ -4,7 +4,7 @@ const Users = require("../users/user-model");
 const userExists = require("../middleware/userExists");
 
 // Register a new user
-router.post("/register", userExists(), async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
